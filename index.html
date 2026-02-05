@@ -165,7 +165,7 @@
       <div class="card" id="card" role="button" aria-label="Tarjeta de rol" tabindex="0">
         <div class="face front">
           <div>
-            <div class="title">Tarjeta boca abajo</div>
+            <div class="title" id="tituloTarjeta">Tarjeta de participante</div>
             <div class="turn" id="turnoInfo"></div>
           </div>
         </div>
@@ -216,6 +216,7 @@
 
       const estado = document.getElementById("estado");
       const turnoInfo = document.getElementById("turnoInfo");
+      const tituloTarjeta = document.getElementById("tituloTarjeta");
       const card = document.getElementById("card");
       const contenidoRol = document.getElementById("contenidoRol");
       const btnIniciar = document.getElementById("btnIniciar");
@@ -326,7 +327,8 @@
       function actualizarEstado(){
         const impTxt = (impostores.size>1) ? `Impostores: ${[...impostores].join(", ")}` : `Impostor: ${[...impostores][0]||"-"}`;
         estado.textContent = `Ronda activa — Jugadores: ${jugadores}. Turno ${turno}/${jugadores}. ${impTxt}`;
-        turnoInfo.textContent = `Turno del participante ${turno} / ${jugadores}`;
+        tituloTarjeta.textContent = `Tarjeta de participante ${turno}`;
+        turnoInfo.textContent = "Tocá la tarjeta para revelar tu rol.";
       }
 
       function iniciarRonda(){
@@ -364,9 +366,9 @@
 
       function renderBack(){
         if(impostores.has(turno)){
-          contenidoRol.innerHTML = `<div class="role impostor">¡SOS EL IMPOSTOR!</div><div style="color:#9ca3af; font-size:.95rem">No tenés palabra — improvisá 😉</div>`;
+          contenidoRol.innerHTML = `<div class="role impostor">¡SOS EL IMPOSTOR!</div><div style="color:#9ca3af; font-size:.95rem">No tenés palabra — improvisá 😉</div><div style="margin-top:10px; color:#9ca3af; font-size:.92rem">Volvé a tocar la tarjeta para esconder tu rol y pasar al siguiente jugador.</div>`;
         } else {
-          contenidoRol.innerHTML = `<div class="role">Tu palabra</div><div class="word">${escapeHTML(palabra)}</div>`;
+          contenidoRol.innerHTML = `<div class="role">Tu palabra</div><div class="word">${escapeHTML(palabra)}</div><div style="margin-top:10px; color:#9ca3af; font-size:.92rem">Volvé a tocar la tarjeta para esconder tu rol y pasar al siguiente jugador.</div>`;
         }
       }
       function escapeHTML(s){
